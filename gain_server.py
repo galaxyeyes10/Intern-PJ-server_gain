@@ -1,4 +1,4 @@
-from fastapi import FastAPI, Depends, HTTPException
+from fastapi import Body, FastAPI, Depends
 from sqlalchemy.orm import Session
 from model import ReviewTable, UserTable, StoreTable
 from db import session
@@ -25,7 +25,7 @@ def get_db():
 
 #회원 정보 등록
 @gain.post("/gain/")
-async def create_member(user_id: str, password: str, username: str, db: Session = Depends(get_db)):
+async def create_member(user_id: str = Body(...), password: str = Body(...), username: str = Body(...), db: Session = Depends(get_db)):
     new_member = UserTable()
     new_member.user_id = user_id
     new_member.password = password
